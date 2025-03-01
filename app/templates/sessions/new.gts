@@ -108,70 +108,68 @@ class NewSessionForm extends Component<{
 
       {{#if this.image}}
         <img alt="Session" height="200" src={{this.image}} />
+
+        <label for="date">
+          Einddatum
+        </label>
+        <input id="date" name="date" required type="date" value={{this.date}} />
+
+        <label for="time">
+          Eindtijdstip
+        </label>
+        <input id="time" name="time" required type="time" value={{this.time}} />
+
+        <label for="hours">
+          Duur Uren
+        </label>
+        <input
+          id="hours"
+          min="0"
+          name="hours"
+          placeholder="10"
+          required
+          step="1"
+          type="number"
+          value={{this.hours}}
+        />
+
+        <label for="minutes">
+          Duur Minuten
+        </label>
+        <input
+          id="minutes"
+          max="59"
+          min="0"
+          name="minutes"
+          placeholder="5"
+          required
+          step="1"
+          type="number"
+          value={{this.minutes}}
+        />
+
+        <label for="totalKwh">
+          Totaal kWh
+        </label>
+        <input
+          id="totalKwh"
+          min="0"
+          name="totalKwh"
+          placeholder="50.10"
+          required
+          step="0.01"
+          type="number"
+          value={{this.totalKwh}}
+        />
+
+        <button disabled={{this.submitting}} type="submit">
+          {{#if this.submitting}}
+            Sessie Opslaan...
+          {{else}}
+            Sessie Opslaan
+          {{/if}}
+        </button>
       {{/if}}
-
-      <label for="date">
-        Einddatum
-      </label>
-      <input id="date" name="date" required type="date" value={{this.date}} />
-
-      <label for="time">
-        Eindtijdstip
-      </label>
-      <input id="time" name="time" required type="time" value={{this.time}} />
-
-      <label for="hours">
-        Duur Uren
-      </label>
-      <input
-        {{! template-lint-disable no-autofocus-attribute }}
-        autofocus
-        id="hours"
-        min="0"
-        name="hours"
-        placeholder="10"
-        required
-        step="1"
-        type="number"
-        value={{this.hours}}
-      />
-
-      <label for="minutes">
-        Duur Minuten
-      </label>
-      <input
-        id="minutes"
-        max="59"
-        min="0"
-        name="minutes"
-        placeholder="5"
-        required
-        step="1"
-        type="number"
-        value={{this.minutes}}
-      />
-
-      <label for="totalKwh">
-        Totaal kWh
-      </label>
-      <input
-        id="totalKwh"
-        min="0"
-        name="totalKwh"
-        placeholder="50.10"
-        required
-        step="0.01"
-        type="number"
-        value={{this.totalKwh}}
-      />
-
-      <button disabled={{this.submitting}} type="submit">
-        {{#if this.submitting}}
-          Sessie Opslaan...
-        {{else}}
-          Sessie Opslaan
-        {{/if}}
-      </button>
     </form>
   </template>
 }
