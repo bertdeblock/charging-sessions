@@ -90,6 +90,9 @@ export default ts.config(
       parserOptions: parserOptions.esm.ts,
     },
     extends: [...ts.configs.recommendedTypeChecked, ember.configs.gts],
+    rules: {
+      '@typescript-eslint/explicit-function-return-type': 'error',
+    },
   },
   {
     files: ['tests/**/*-test.{js,gjs,ts,gts}'],

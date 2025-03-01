@@ -1,1 +1,132 @@
-/* Ember supports plain CSS out of the box. More info: https://cli.emberjs.com/release/advanced-use/stylesheets/ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: system-ui;
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+}
+
+header {
+  background-color: black;
+  padding: 1rem;
+}
+
+header > nav > ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+header > nav > ul > li:not(:last-child) {
+  margin-right: 1rem;
+}
+
+header > nav > ul > li > a {
+  color: white;
+  text-decoration: none;
+}
+
+header > nav > ul > li > a.active {
+  font-weight: 700;
+}
+
+section {
+  padding: 1rem;
+}
+
+p {
+  margin: 0;
+}
+
+button,
+input,
+label {
+  display: block;
+}
+
+label {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+input {
+  margin-bottom: 1rem;
+}
+
+input:not([type="file"]) {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 0.25rem;
+  font-family: inherit;
+  font-size: inherit;
+  height: 3rem;
+  padding: 0 0.5rem;
+  width: 100%;
+}
+
+img {
+  border-radius: 0.25rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+svg {
+  display: block;
+}
+
+button {
+  background-color: black;
+  border: 0;
+  border-radius: 0.25rem;
+  color: white;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  height: 3rem;
+  margin-top: 1rem;
+  padding: 0 0.5rem;
+  width: 100%;
+}
+
+table button {
+  height: 2rem;
+  margin-top: 0;
+  width: 2rem;
+}
+
+button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+table {
+  border-spacing: 0;
+  margin: 0 -1rem;
+  width: calc(100% + 2rem);
+}
+
+tbody tr:first-child {
+  background-color: rgba(0, 255, 0, 0.2);
+}
+
+td,
+th {
+  border-bottom: 1px solid black;
+  padding: 0.5rem 1rem;
+  text-align: left;
+}
+
+td:last-child,
+th:last-child {
+  width: 1px;
+}
+
+td div:not(:last-child) {
+  margin-bottom: 0.5rem;
+}

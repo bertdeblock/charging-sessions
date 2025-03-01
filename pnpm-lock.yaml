@@ -32,6 +32,9 @@ importers:
       '@eslint/js':
         specifier: ^9.19.0
         version: 9.21.0
+      '@formkit/tempo':
+        specifier: ^0.1.2
+        version: 0.1.2
       '@glimmer/component':
         specifier: ^2.0.0
         version: 2.0.0
@@ -113,6 +116,9 @@ importers:
       ember-resolver:
         specifier: ^13.1.0
         version: 13.1.0(ember-source@6.3.0-beta.1(@glimmer/component@2.0.0)(@glint/template@1.5.2)(rsvp@4.8.5)(webpack@5.98.0))
+      ember-route-template:
+        specifier: ^1.0.3
+        version: 1.0.3
       ember-source:
         specifier: ~6.3.0-beta.1
         version: 6.3.0-beta.1(@glimmer/component@2.0.0)(@glint/template@1.5.2)(rsvp@4.8.5)(webpack@5.98.0)
@@ -892,6 +898,9 @@ packages:
   '@eslint/plugin-kit@0.2.7':
     resolution: {integrity: sha512-JubJ5B2pJ4k4yGxaNLdbjrnk9d/iDz6/q8wOilpIowd6PJPgaxCuHBnBszq7Ce2TyMrywm5r4PnKm6V3iiZF+g==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@formkit/tempo@0.1.2':
+    resolution: {integrity: sha512-jNPPbjL8oj7hK3eHX++CwbR6X4GKQt+x00/q4yeXkwynXHGKL27dylYhpEgwrmediPP4y7s0XtN1if/M/JYujg==}
 
   '@glimmer/compiler@0.92.4':
     resolution: {integrity: sha512-xoR8F6fsgFqWbPbCfSgJuJ95vaLnXw0SgDCwyl/KMeeaSxpHwJbr8+BfiUl+7ko2A+HzrY5dPXXnGr4ZM+CUXw==}
@@ -2677,6 +2686,9 @@ packages:
 
   ember-rfc176-data@0.3.18:
     resolution: {integrity: sha512-JtuLoYGSjay1W3MQAxt3eINWXNYYQliK90tLwtb8aeCuQK8zKGCRbBodVIrkcTqshULMnRuTOS6t1P7oQk3g6Q==}
+
+  ember-route-template@1.0.3:
+    resolution: {integrity: sha512-p//Nk4g4Wu9F8cZdjB69rKxTRi6RRW32a8K5sYsi5cofTcJtPBXRWUXWpQEjJX6qcucgxooQwEm9+7MOy4lwNw==}
 
   ember-router-generator@2.0.0:
     resolution: {integrity: sha512-89oVHVJwmLDvGvAUWgS87KpBoRhy3aZ6U0Ql6HOmU4TrPkyaa8pM0W81wj9cIwjYprcQtN9EwzZMHnq46+oUyw==}
@@ -6955,6 +6967,8 @@ snapshots:
       '@eslint/core': 0.12.0
       levn: 0.4.1
 
+  '@formkit/tempo@0.1.2': {}
+
   '@glimmer/compiler@0.92.4':
     dependencies:
       '@glimmer/interfaces': 0.92.3
@@ -9303,6 +9317,12 @@ snapshots:
       - supports-color
 
   ember-rfc176-data@0.3.18: {}
+
+  ember-route-template@1.0.3:
+    dependencies:
+      '@embroider/addon-shim': 1.9.0
+    transitivePeerDependencies:
+      - supports-color
 
   ember-router-generator@2.0.0:
     dependencies:
