@@ -43,8 +43,18 @@ section {
   padding: 1rem;
 }
 
+section.fullscreen {
+  align-items: center;
+  display: flex;
+  height: 100vh;
+}
+
 p {
   margin: 0;
+}
+
+form {
+  width: 100%;
 }
 
 button,

@@ -1,20 +1,3 @@
-import { LinkTo } from '@ember/routing';
 import RouteTemplate from 'ember-route-template';
 
-export default RouteTemplate(
-  <template>
-    <header>
-      <nav>
-        <ul>
-          <li>
-            <LinkTo @route="sessions.index">Sessies</LinkTo>
-          </li>
-          <li>
-            <LinkTo @route="sessions.new">Nieuwe Sessie</LinkTo>
-          </li>
-        </ul>
-      </nav>
-    </header>
-    {{outlet}}
-  </template>,
-);
+export default RouteTemplate(<template>{{outlet}}</template>);
