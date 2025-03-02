@@ -20,11 +20,10 @@ export async function readSessions(): Promise<SessionsData> {
   if (response.ok) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     sessionsData = (await response.json()).record as SessionsData;
+    localStorage.setItem('sessions', JSON.stringify(sessionsData));
   } else {
     sessionsData = { sessions: [] };
   }
-
-  localStorage.setItem('sessions', JSON.stringify(sessionsData));
 
   return sessionsData;
 }
