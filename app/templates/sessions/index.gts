@@ -16,12 +16,12 @@ export default RouteTemplate(
           <thead>
             <tr>
               <th>Start / Einde</th>
-              <th>Totaal kWh</th>
+              <th>Totaal</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {{#each @model.sessions as |session|}}
+            {{#each @model.sessions key="id" as |session|}}
               <tr>
                 <td>
                   <div>
@@ -31,17 +31,21 @@ export default RouteTemplate(
                     }}
                   </div>
                   <div>
-                    {{format
-                      session.end
-                      (concat FORMAT.TIME "\h - " FORMAT.DATE_NL)
-                    }}
+                    <b>
+                      {{format
+                        session.end
+                        (concat FORMAT.TIME "\h - " FORMAT.DATE_NL)
+                      }}
+                    </b>
                   </div>
                   <div>
-                    <b>{{session.id}}</b>
+                    <em>{{session.id}}</em>
                   </div>
                 </td>
                 <td>
-                  {{session.totalKwh}}
+                  <b>
+                    {{session.totalKwh}}kWh
+                  </b>
                 </td>
                 <td>
                   <button

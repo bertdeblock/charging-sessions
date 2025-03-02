@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 import { on } from '@ember/modifier';
+import { fn } from '@ember/helper';
 import type RouterService from '@ember/routing/router-service';
 import { service } from '@ember/service';
 import { addHour, addMinute, format, parse } from '@formkit/tempo';
@@ -51,7 +52,8 @@ class NewSessionForm extends Component<{
       data: { text: string };
     };
 
-    const [, datetime] = /ACE0546278 (.*)/.exec(text) ?? ['', ''];
+    // `ACE0546278`, but we omit the `A`, because it is not always readable:
+    const [, datetime] = /CE0546278 (.*)/.exec(text) ?? ['', ''];
     const [, duration] = /Laadtijd: (.*)h/.exec(text) ?? ['', ''];
     const [, totalKwh] = /Totaal: (.*)kWh/.exec(text) ?? ['', ''];
 
@@ -72,39 +74,47 @@ class NewSessionForm extends Component<{
   submit = async (event: SubmitEvent): void => {
     event.preventDefault();
 
-    this.submitting = true;
+    const parsed = parse(
+      `${this.date} ${this.time}`,
+      `${FORMAT.DATE_US} ${FORMAT.TIME}`,
+    );
 
-    const form = new FormData(event.target);
-    const date = String(form.get('date'));
-    const time = String(form.get('time'));
-    const parsed = parse(`${date} ${time}`, `${FORMAT.DATE_US} ${FORMAT.TIME}`);
-
-    await createSession({
+    const newSession = {
       id: Date.now(),
       start: addHour(
-        addMinute(parsed, -Number(form.get('minutes'))),
-        -Number(form.get('hours')),
+        addMinute(parsed, -Number(this.minutes)),
+        -Number(this.hours),
       ).toISOString(),
       end: parsed.toISOString(),
-      totalKwh: Number(form.get('totalKwh')),
-    });
+      totalKwh: Number(this.totalKwh),
+    };
+
+    console.log(newSession);
+
+    this.submitting = true;
+
+    await createSession(newSession);
 
     this.router.transitionTo('sessions.index');
   };
 
+  updateValue = (key: string, event: Event): void => {
+    this[key] = event.target.value;
+  };
+
   <template>
     <form {{on "submit" this.submit}} ...attributes>
-      <label for="image">
-        Afbeelding
-      </label>
-      <input
-        accept="image/*"
-        id="image"
-        name="image"
-        required
-        type="file"
-        {{on "change" this.processImage}}
-      />
+      <button type="button">
+        Afbeelding Kiezen
+        {{! template-lint-disable no-nested-interactive }}
+        <input
+          aria-label="Afbeelding Kiezen"
+          accept="image/*"
+          required
+          type="file"
+          {{on "change" this.processImage}}
+        />
+      </button>
 
       {{#if this.image}}
         <img alt="Session" height="200" src={{this.image}} />
@@ -112,12 +122,24 @@ class NewSessionForm extends Component<{
         <label for="date">
           Einddatum
         </label>
-        <input id="date" name="date" required type="date" value={{this.date}} />
+        <input
+          id="date"
+          required
+          type="date"
+          value={{this.date}}
+          {{on "input" (fn this.updateValue "date")}}
+        />
 
         <label for="time">
           Eindtijdstip
         </label>
-        <input id="time" name="time" required type="time" value={{this.time}} />
+        <input
+          id="time"
+          required
+          type="time"
+          value={{this.time}}
+          {{on "input" (fn this.updateValue "time")}}
+        />
 
         <label for="hours">
           Duur Uren
@@ -125,12 +147,12 @@ class NewSessionForm extends Component<{
         <input
           id="hours"
           min="0"
-          name="hours"
           placeholder="10"
           required
           step="1"
           type="number"
           value={{this.hours}}
+          {{on "input" (fn this.updateValue "hours")}}
         />
 
         <label for="minutes">
@@ -140,12 +162,12 @@ class NewSessionForm extends Component<{
           id="minutes"
           max="59"
           min="0"
-          name="minutes"
           placeholder="5"
           required
           step="1"
           type="number"
           value={{this.minutes}}
+          {{on "input" (fn this.updateValue "minutes")}}
         />
 
         <label for="totalKwh">
@@ -154,12 +176,12 @@ class NewSessionForm extends Component<{
         <input
           id="totalKwh"
           min="0"
-          name="totalKwh"
           placeholder="50.10"
           required
           step="0.01"
           type="number"
           value={{this.totalKwh}}
+          {{on "input" (fn this.updateValue "totalKwh")}}
         />
 
         <button disabled={{this.submitting}} type="submit">
