@@ -29,10 +29,12 @@ export default RouteTemplate(
               <tr class={{if (isNew session) "highlight"}}>
                 <td>
                   <div>
-                    {{format
-                      session.start
-                      (concat FORMAT.TIME "\h - " FORMAT.DATE_NL)
-                    }}
+                    <em>
+                      {{format
+                        session.start
+                        (concat FORMAT.TIME "\h - " FORMAT.DATE_NL)
+                      }}
+                    </em>
                   </div>
                   <div>
                     <b>

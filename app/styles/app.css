@@ -57,6 +57,10 @@ p {
   margin-top: 1rem;
 }
 
+em {
+  color: oklch(0.551 0.027 264.364);
+}
+
 form {
   width: 100%;
 }
