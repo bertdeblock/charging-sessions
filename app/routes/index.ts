@@ -8,7 +8,7 @@ export default class IndexRoute extends Route {
 
   beforeModel(): void {
     if (isAuth()) {
-      this.router.transitionTo('sessions.new');
+      this.router.transitionTo('sessions.index');
     }
   }
 }

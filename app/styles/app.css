@@ -3,6 +3,8 @@
 }
 
 html {
+  background-color: oklch(0.129 0.042 264.695);
+  color: oklch(0.704 0.04 256.788);
   font-family: system-ui;
   font-size: 16px;
 }
@@ -12,8 +14,8 @@ body {
 }
 
 header {
-  background-color: oklch(0.257 0.09 281.288);
-  padding: 1rem;
+  background-color: oklch(0.129 0.042 264.695);
+  border-bottom: 1px solid oklch(0.279 0.041 260.031);
   position: sticky;
   top: 0;
   z-index: 1;
@@ -26,17 +28,17 @@ header > nav > ul {
   padding: 0;
 }
 
-header > nav > ul > li:not(:last-child) {
-  margin-right: 1rem;
-}
-
 header > nav > ul > li > a {
-  color: white;
+  color: oklch(0.446 0.043 257.281);
+  display: block;
+  font-weight: 700;
+  padding: 1rem;
   text-decoration: none;
 }
 
 header > nav > ul > li > a.active {
-  font-weight: 700;
+  background-color: oklch(0.279 0.041 260.031);
+  color: inherit;
 }
 
 section {
@@ -58,7 +60,7 @@ p {
 }
 
 em {
-  color: oklch(0.551 0.027 264.364);
+  color: oklch(0.446 0.043 257.281);
 }
 
 form {
@@ -77,15 +79,20 @@ label {
 }
 
 input:not([type="file"]) {
-  background-color: white;
-  border: 1px solid oklch(0.872 0.01 258.338);
+  background-color: transparent;
+  border: 1px solid oklch(0.279 0.041 260.031);
   border-radius: 0.25rem;
+  color: inherit;
   font-family: inherit;
   font-size: inherit;
   height: 3rem;
   margin-bottom: 1rem;
   padding: 0 0.5rem;
   width: 100%;
+}
+
+input:not([type="file"])::placeholder {
+  color: oklch(0.446 0.043 257.281);
 }
 
 input[type="file"] {
@@ -106,10 +113,10 @@ svg {
 }
 
 button {
-  background-color: oklch(0.511 0.262 276.966);
+  background-color: oklch(0.398 0.195 277.366);
   border: 0;
   border-radius: 0.25rem;
-  color: white;
+  color: inherit;
   font-family: inherit;
   font-size: inherit;
   font-weight: 700;
@@ -125,7 +132,7 @@ button {
 }
 
 table button {
-  background-color: oklch(0.586 0.253 17.585);
+  background-color: oklch(0.258 0.092 26.042);
   height: 2rem;
   width: 2rem;
 }
@@ -137,7 +144,8 @@ button[disabled] {
 
 table {
   border-spacing: 0;
-  margin: 1rem -1rem 0;
+  border-top: 1px solid oklch(0.279 0.041 260.031);
+  margin: 1rem -1rem -1rem;
   width: calc(100% + 2rem);
 }
 
@@ -147,9 +155,13 @@ tbody tr.highlight {
 
 td,
 th {
-  border-bottom: 1px solid oklch(0.872 0.01 258.338);
+  border-bottom: 1px solid oklch(0.279 0.041 260.031);
   padding: 0.5rem 1rem;
   text-align: left;
+}
+
+tr:last-child td {
+  border-bottom: 0;
 }
 
 td:last-child,

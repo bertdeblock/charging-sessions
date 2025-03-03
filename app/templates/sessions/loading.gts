@@ -3,7 +3,9 @@ import RouteTemplate from 'ember-route-template';
 export default RouteTemplate(
   <template>
     <section>
-      <p>Sessies laden...</p>
+      <p>
+        <em>Sessies laden...</em>
+      </p>
     </section>
   </template>,
 );

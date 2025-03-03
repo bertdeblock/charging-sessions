@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-base-to-string */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -10,20 +9,19 @@ import { service } from '@ember/service';
 import { addHour, addMinute, format, parse } from '@formkit/tempo';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import pageTitle from 'ember-page-title/helpers/page-title';
 import RouteTemplate from 'ember-route-template';
 import { FORMAT } from 'ev/consts';
 import { createSession } from 'ev/db';
 
 export default RouteTemplate(
   <template>
-    {{pageTitle "Nieuwe sessie"}}
-
     <section>
       <NewSessionForm />
     </section>
   </template>,
 );
+
+let worker;
 
 class NewSessionForm extends Component<{
   Element: HTMLFormElement;
@@ -43,10 +41,12 @@ class NewSessionForm extends Component<{
   processImage = async (event: Event): void => {
     this.processingImage = true;
 
-    const worker = await Tesseract.createWorker('eng', 1, {
-      workerPath:
-        'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/worker.min.js',
-    });
+    if (worker === undefined) {
+      worker = await Tesseract.createWorker('nld', 1, {
+        workerPath:
+          'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/worker.min.js',
+      });
+    }
 
     const file = (event.target as HTMLInputElement).files[0];
     const {
@@ -54,6 +54,8 @@ class NewSessionForm extends Component<{
     } = (await worker.recognize(file)) as {
       data: { text: string };
     };
+
+    console.log(text);
 
     // `ACE0546278`, but we omit `ACE`, because it is not always readable:
     const [, datetime] = /0546278 (.*)/.exec(text) ?? ['', ''];

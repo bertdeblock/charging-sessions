@@ -1,7 +1,6 @@
 import { concat, fn } from '@ember/helper';
 import { on } from '@ember/modifier';
 import { format } from '@formkit/tempo';
-import pageTitle from 'ember-page-title/helpers/page-title';
 import RouteTemplate from 'ember-route-template';
 import { FORMAT } from 'ev/consts';
 import { clearStorage, deleteSession } from 'ev/db';
@@ -9,13 +8,17 @@ import type { Session } from 'ev/types';
 
 export default RouteTemplate(
   <template>
-    {{pageTitle "Sessies"}}
-
     <section>
       <button type="button" {{on "click" clearStorage}}>
         Herladen
       </button>
       {{#if @model.sessions.length}}
+        <p>
+          <em>Totaal: {{totalKwh @model.sessions}}kWh</em>
+        </p>
+        <p>
+          <em>Geschatte kosten: €{{cost @model.sessions}}</em>
+        </p>
         <table>
           <thead>
             <tr>
@@ -76,12 +79,22 @@ export default RouteTemplate(
           </tbody>
         </table>
       {{else}}
-        <p>Nog geen sessies.</p>
+        <p>
+          <em>Nog geen sessies.</em>
+        </p>
       {{/if}}
     </section>
   </template>,
 );
 
+function cost(sessions: Session[]): number {
+  return totalKwh(sessions) * 0.33;
+}
+
 function isNew(session: Session): boolean {
   return Date.now() - session.id < 60000;
+}
+
+function totalKwh(sessions: Session[]): number {
+  return sessions.reduce((totalKwh, session) => totalKwh + session.totalKwh, 0);
 }
