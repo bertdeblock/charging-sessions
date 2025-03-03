@@ -5,12 +5,16 @@ import pageTitle from 'ember-page-title/helpers/page-title';
 import RouteTemplate from 'ember-route-template';
 import { FORMAT } from 'ev/consts';
 import { clearStorage, deleteSession } from 'ev/db';
+import type { Session } from 'ev/types';
 
 export default RouteTemplate(
   <template>
     {{pageTitle "Sessies"}}
 
     <section>
+      <button type="button" {{on "click" clearStorage}}>
+        Herladen
+      </button>
       {{#if @model.sessions.length}}
         <table>
           <thead>
@@ -22,7 +26,7 @@ export default RouteTemplate(
           </thead>
           <tbody>
             {{#each @model.sessions key="id" as |session|}}
-              <tr>
+              <tr class={{if (isNew session) "highlight"}}>
                 <td>
                   <div>
                     {{format
@@ -72,9 +76,10 @@ export default RouteTemplate(
       {{else}}
         <p>Nog geen sessies.</p>
       {{/if}}
-      <button type="button" {{on "click" clearStorage}}>
-        Herladen
-      </button>
     </section>
   </template>,
 );
+
+function isNew(session: Session): boolean {
+  return Date.now() - session.id < 60000;
+}

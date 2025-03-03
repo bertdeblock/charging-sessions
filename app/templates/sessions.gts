@@ -10,7 +10,7 @@ export default RouteTemplate(
             <LinkTo @route="sessions.index">Sessies</LinkTo>
           </li>
           <li>
-            <LinkTo @route="sessions.new">Nieuwe Sessie</LinkTo>
+            <LinkTo @route="sessions.new">Nieuwe sessie</LinkTo>
           </li>
         </ul>
       </nav>

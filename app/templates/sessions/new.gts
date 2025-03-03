@@ -17,7 +17,7 @@ import { createSession } from 'ev/db';
 
 export default RouteTemplate(
   <template>
-    {{pageTitle "Nieuwe Sessie"}}
+    {{pageTitle "Nieuwe sessie"}}
 
     <section>
       <NewSessionForm />
@@ -37,9 +37,12 @@ class NewSessionForm extends Component<{
   @tracked minutes: string = '';
   @tracked totalKwh: string = '';
 
+  @tracked processingImage: boolean = false;
   @tracked submitting: boolean = false;
 
   processImage = async (event: Event): void => {
+    this.processingImage = true;
+
     const worker = await Tesseract.createWorker('eng', 1, {
       workerPath:
         'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/worker.min.js',
@@ -52,8 +55,8 @@ class NewSessionForm extends Component<{
       data: { text: string };
     };
 
-    // `ACE0546278`, but we omit the `A`, because it is not always readable:
-    const [, datetime] = /CE0546278 (.*)/.exec(text) ?? ['', ''];
+    // `ACE0546278`, but we omit `ACE`, because it is not always readable:
+    const [, datetime] = /0546278 (.*)/.exec(text) ?? ['', ''];
     const [, duration] = /Laadtijd: (.*)h/.exec(text) ?? ['', ''];
     const [, totalKwh] = /Totaal: (.*)kWh/.exec(text) ?? ['', ''];
 
@@ -61,14 +64,22 @@ class NewSessionForm extends Component<{
     const [hours, minutes]: [string, string] = duration.split(':');
 
     this.image = await toBase64String(file);
-    this.date = format(
-      date ? parse(date, FORMAT.DATE_NL) : new Date(),
-      FORMAT.DATE_US,
-    );
-    this.time = time ?? format(new Date(), FORMAT.TIME);
+    this.date = date ? format(parse(date, FORMAT.DATE_NL), FORMAT.DATE_US) : '';
+    this.time = time ?? '';
     this.hours = hours ?? '';
     this.minutes = minutes ?? '';
     this.totalKwh = totalKwh ?? '';
+
+    console.log({
+      image: this.image,
+      date: this.date,
+      time: this.time,
+      hours: this.hours,
+      minutes: this.minutes,
+      totalKwh: this.totalKwh,
+    });
+
+    this.processingImage = false;
   };
 
   submit = async (event: SubmitEvent): void => {
@@ -104,12 +115,17 @@ class NewSessionForm extends Component<{
 
   <template>
     <form {{on "submit" this.submit}} ...attributes>
-      <button type="button">
-        Afbeelding Kiezen
+      <button disabled={{this.processingImage}} type="button">
+        {{#if this.processingImage}}
+          Afbeelding opladen...
+        {{else}}
+          Afbeelding kiezen
+        {{/if}}
         {{! template-lint-disable no-nested-interactive }}
         <input
           aria-label="Afbeelding Kiezen"
           accept="image/*"
+          disabled={{this.processingImage}}
           required
           type="file"
           {{on "change" this.processImage}}
@@ -117,7 +133,7 @@ class NewSessionForm extends Component<{
       </button>
 
       {{#if this.image}}
-        <img alt="Session" height="200" src={{this.image}} />
+        <img alt="Session" src={{this.image}} />
 
         <label for="date">
           Einddatum
@@ -142,7 +158,7 @@ class NewSessionForm extends Component<{
         />
 
         <label for="hours">
-          Duur Uren
+          Duur uren
         </label>
         <input
           id="hours"
@@ -156,7 +172,7 @@ class NewSessionForm extends Component<{
         />
 
         <label for="minutes">
-          Duur Minuten
+          Duur minuten
         </label>
         <input
           id="minutes"
@@ -186,9 +202,9 @@ class NewSessionForm extends Component<{
 
         <button disabled={{this.submitting}} type="submit">
           {{#if this.submitting}}
-            Sessie Opslaan...
+            Sessie opslaan...
           {{else}}
-            Sessie Opslaan
+            Sessie opslaan
           {{/if}}
         </button>
       {{/if}}

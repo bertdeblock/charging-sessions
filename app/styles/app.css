@@ -53,6 +53,10 @@ p {
   margin: 0;
 }
 
+* + p {
+  margin-top: 1rem;
+}
+
 form {
   width: 100%;
 }
@@ -90,6 +94,7 @@ img {
   border-radius: 0.25rem;
   display: block;
   margin: 1rem 0;
+  max-width: 100%;
 }
 
 svg {
@@ -128,11 +133,11 @@ button[disabled] {
 
 table {
   border-spacing: 0;
-  margin: 0 -1rem;
+  margin: 1rem -1rem 0;
   width: calc(100% + 2rem);
 }
 
-tbody tr:first-child {
+tbody tr.highlight {
   background-color: oklch(0.962 0.044 156.743);
 }
 
