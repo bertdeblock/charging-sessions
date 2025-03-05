@@ -28,6 +28,7 @@ class NewSessionForm extends Component<{
 }> {
   @service declare router: RouterService;
 
+  @tracked text: string = '';
   @tracked image: string = '';
   @tracked date: string = '';
   @tracked time: string = '';
@@ -65,6 +66,7 @@ class NewSessionForm extends Component<{
     const [date, time]: [string, string] = datetime.split(' ');
     const [hours, minutes]: [string, string] = duration.split(':');
 
+    this.text = text;
     this.image = await toBase64String(file);
     this.date = date ? format(parse(date, FORMAT.DATE_NL), FORMAT.DATE_US) : '';
     this.time = time ?? '';
@@ -136,6 +138,8 @@ class NewSessionForm extends Component<{
 
       {{#if this.image}}
         <img alt="Session" src={{this.image}} />
+
+        <pre>{{this.text}}</pre>
 
         <label for="date">
           Einddatum

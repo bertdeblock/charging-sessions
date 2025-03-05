@@ -108,6 +108,13 @@ img {
   max-width: 100%;
 }
 
+pre {
+  background-color: oklch(0.279 0.041 260.031);
+  border-radius: 0.25rem;
+  margin: 1rem 0;
+  padding: 1rem;
+}
+
 svg {
   display: block;
 }
