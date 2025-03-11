@@ -50,25 +50,30 @@ class NewSessionForm extends Component<{
     }
 
     const file = (event.target as HTMLInputElement).files[0];
-    const {
-      data: { text },
-    } = (await worker.recognize(file)) as {
+    const { data } = (await worker.recognize(file)) as {
       data: { text: string };
     };
 
-    console.log(text);
+    const text = data.text.toLowerCase();
 
     // `ACE0546278`, but we omit `ACE`, because it is not always readable:
     const [, datetime] = /0546278 (.*)/.exec(text) ?? ['', ''];
-    const [, duration] = /Laadtijd: (.*)h/.exec(text) ?? ['', ''];
-    const [, totalKwh] = /Totaal: (.*)kWh/.exec(text) ?? ['', ''];
+    const [, duration] = /laadtijd: (.*)h/.exec(text) ?? ['', ''];
+    const [, totalKwh] = /totaal: (.*)kwh/.exec(text) ?? ['', ''];
 
-    const [date, time]: [string, string] = datetime.split(' ');
+    const datetimeParts = datetime.split(' ');
+    const date = datetimeParts.at(-2).replace(/:/g, '-');
+    const time = datetimeParts.at(-1);
     const [hours, minutes]: [string, string] = duration.split(':');
+
+    try {
+      this.date = date ? format(parse(date, 'DD-MM-YYYY'), FORMAT.DATE_US) : '';
+    } catch (error) {
+      console.error(error);
+    }
 
     this.text = text;
     this.image = await toBase64String(file);
-    this.date = date ? format(parse(date, FORMAT.DATE_NL), FORMAT.DATE_US) : '';
     this.time = time ?? '';
     this.hours = hours ?? '';
     this.minutes = minutes ?? '';
