@@ -142,7 +142,7 @@ class NewSessionForm extends Component<{
       </button>
 
       {{#if this.image}}
-        <img alt="Session" src={{this.image}} />
+        <img alt="Gekozen afbeelding van laadpaal" src={{this.image}} />
 
         <pre>{{this.text}}</pre>
 
