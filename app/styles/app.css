@@ -1,3 +1,5 @@
+/* stylelint-disable hue-degree-notation, lightness-notation */
+
 * {
   box-sizing: border-box;
 }
@@ -167,13 +169,13 @@ th {
   text-align: left;
 }
 
-tr:last-child td {
-  border-bottom: 0;
-}
-
 td:last-child,
 th:last-child {
   width: 1px;
+}
+
+tr:last-child td {
+  border-bottom: 0;
 }
 
 td div:not(:last-child) {
